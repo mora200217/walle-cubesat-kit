@@ -1,8 +1,13 @@
-# walle-cubesat-kit
+# 🌱 walle-cubesat-kit
+ - [Diseño PCB](#pcb-design).
+ - [Diseño Estructura](#estructura).
+ - [Codigo](#codigo).
+## PCB Design
+El diseño de la PCB se realizó en Kicad.  
+Esquematico:  
+Archivo PCB:  
+Archivos Gerber:  
 
-### Eva - GUI 
-To run the graphical user interface use the following command inside the eva folder 
-```bash
-cd eva && npm run dev 
+### Esquematico
 
-```
+## Codigo
