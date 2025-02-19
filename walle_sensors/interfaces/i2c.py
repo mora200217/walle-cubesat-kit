@@ -15,7 +15,7 @@ class I2C:
 
     def write_register(self, reg, data):
         """Write data to a register."""
-        self.i2c.write_byte_data(self, self.i2c_address, reg, data)
+        self.i2c.write_byte_data(self.i2c_address, reg, data)
 
     def read_register(self, reg, length):
         return self.i2c.read_i2c_block_data(self.i2c_address, reg, length)

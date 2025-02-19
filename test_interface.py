@@ -11,7 +11,7 @@ print("Testing sensor at {}".format(time.time()))
 print("======")
 
 # Testing sensor
-imu = BMI(0x68)
+imu = BMI(0x69)
 imu.setup()
 
 while(True): 
