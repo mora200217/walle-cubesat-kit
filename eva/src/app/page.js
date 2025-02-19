@@ -1,14 +1,25 @@
+"use client"
+
 import Image from "next/image";
 import styles from "./page.module.css";
+import { Viz } from '../../components/Viz';
+
+import * as THREE from 'three';
 
 export default function Home() {
+
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
         <div>
           <h1>Eva</h1>
           <h6>for Walle</h6>
+
+          <Viz/>
         </div>
+
+
       </main>
       <footer className={styles.footer}>
         <a
