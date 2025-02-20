@@ -16,6 +16,10 @@ class BMI(I2C, Sensor):
         self.set_i2c_address(addr)
         self.ACCEL_SENSITIVITY = 16384.0 
 
+        self.ax_offset = 0
+        self.ay_offset = 0
+        self.az_offset = 0
+
     def setup(self) -> bool:
           # Bus 1 is the standard for Raspberry Pi 4
         self.write_register(0x7E, 0x11)  # ACC_NORMAL_MODE
@@ -40,29 +44,29 @@ class BMI(I2C, Sensor):
     def __auto_calibrate(self):
         print("Starting auto-calibration...")
         num_samples = 100
-        ax_offset, ay_offset, az_offset = 0, 0, 0
+        # self.ax_offset, self.ay_offset, self.az_offset = 0, 0, 0
 
         for _ in range(num_samples):
             ax_raw, ay_raw, az_raw = self.read_raw_acceleration()
-            ax_offset += ax_raw
-            ay_offset += ay_raw
-            az_offset += az_raw
+            self.ax_offset += ax_raw
+            self.ay_offset += ay_raw
+            self.az_offset += az_raw
             time.sleep(0.01)
 
-        ax_offset //= num_samples
-        ay_offset //= num_samples
-        az_offset //= num_samples
-        az_offset -= int(self.ACCEL_SENSITIVITY)  # Adjust for gravity
+        self.ax_offset //= num_samples
+        self.ay_offset //= num_samples
+        self.az_offset //= num_samples
+        self.az_offset -= int(self.ACCEL_SENSITIVITY)  # Adjust for gravity
 
-        print(f"Offsets - X: {ax_offset}, Y: {ay_offset}, Z: {az_offset}")
-        return ax_offset, ay_offset, az_offset
+        print(f"Offsets - X: {self.ax_offset}, Y: {self.ay_offset}, Z: {self.az_offset}")
+        return self.ax_offset, self.ay_offset, self.az_offset
 
-    def __read_acceleration(self, ax_offset, ay_offset, az_offset):
+    def __read_acceleration(self, self.ax_offset, self.ay_offset, self.az_offset):
         """Read acceleration data, apply offsets, and convert to m/s²."""
         ax_raw, ay_raw, az_raw = self.read_raw_acceleration()
-        ax = ((ax_raw - ax_offset) / self.ACCEL_SENSITIVITY) * 9.81
-        ay = ((ay_raw - ay_offset) / self.ACCEL_SENSITIVITY) * 9.81
-        az = ((az_raw - az_offset) / self.ACCEL_SENSITIVITY) * 9.81
+        ax = ((ax_raw - self.ax_offset) / self.ACCEL_SENSITIVITY) * 9.81
+        ay = ((ay_raw - self.ay_offset) / self.ACCEL_SENSITIVITY) * 9.81
+        az = ((az_raw - self.az_offset) / self.ACCEL_SENSITIVITY) * 9.81
         return ax, ay, az
 
     def __calculate_tilt_angles(self, ax, ay, az):
