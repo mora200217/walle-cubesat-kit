@@ -501,10 +501,10 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "Export/",
+      "plot": "Fabric/",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "TPI_v1.step",
       "svg": "Export/Images/",
       "vrml": ""
     },
