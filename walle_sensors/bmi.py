@@ -61,7 +61,7 @@ class BMI(I2C, Sensor):
         print(f"Offsets - X: {self.ax_offset}, Y: {self.ay_offset}, Z: {self.az_offset}")
         return self.ax_offset, self.ay_offset, self.az_offset
 
-    def __read_acceleration(self, self.ax_offset, self.ay_offset, self.az_offset):
+    def __read_acceleration(self, ax_offset, ay_offset, az_offset):
         """Read acceleration data, apply offsets, and convert to m/s²."""
         ax_raw, ay_raw, az_raw = self.read_raw_acceleration()
         ax = ((ax_raw - self.ax_offset) / self.ACCEL_SENSITIVITY) * 9.81
