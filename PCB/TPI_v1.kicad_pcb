@@ -113,7 +113,7 @@
 			(sketchpadsonfab no)
 			(subtractmaskfromsilk no)
 			(outputformat 4)
-			(mirror no)
+			(mirror yes)
 			(drillshape 0)
 			(scaleselection 1)
 			(outputdirectory "Fabric/")
