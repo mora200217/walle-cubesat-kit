@@ -28,7 +28,7 @@ class BMI(I2C, Sensor):
         return True 
     
     def read(self) -> np.array:
-        return np.array(self.__read_acceleration())
+        return np.array(self.__read_acceleration(self.ax_offset, self.ay_offset, self.az_offset))
 
     def available(self):
         return True
@@ -74,10 +74,6 @@ class BMI(I2C, Sensor):
         pitch = math.atan2(ay, math.sqrt(ax**2 + az**2)) * 180.0 / math.pi
         roll = math.atan2(-ax, az) * 180.0 / math.pi
         return pitch, roll
-
-
-
-
 
 
 

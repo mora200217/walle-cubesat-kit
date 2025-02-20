@@ -1,8 +1,3 @@
-"""
-    Sensor test script
-    -
-
-"""
 from walle_sensors.bmi import BMI
 
 import time 
