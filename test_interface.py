@@ -9,9 +9,19 @@ print("======")
 imu = BMI(0x69)
 imu.setup()
 
-while(True): 
+bme = BME280(0x76)
+bme.setup()
+
+while(True):
+    time.sleep(100)
     if imu.available(): 
         imu.read()
     else: 
-        print("No available data. Please check connections")
+        print("No available data in imu. Please check connections")
+        time.sleep(0.1)
+
+    if bme.available():
+        bme.read()
+    else:
+        print("No available data in bme. Please check connections")
         time.sleep(0.1)

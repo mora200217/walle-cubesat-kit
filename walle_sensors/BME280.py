@@ -1,9 +1,23 @@
 import board
+from walle_sensors.sensor import Sensor
 from adafruit_bme280 import basic as adafruit_bme280
 
-i2c = board.I2C()  # uses board.SCL and board.SDA
-bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c,0x76)
 
-print("\nTemperature: %0.1f C" % bme280.temperature)
-print("Humidity: %0.1f %%" % bme280.humidity)
-print("Pressure: %0.1f hPa" % bme280.pressure)
+class BME280(Sensor):
+    def __init__(self, addr):
+        super().__init__()
+        i2c = board.I2C()
+        bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c,addr
+
+
+    def setup(self) -> bool:
+        self.units = ["°C",'%',"hPa"]
+        print("--Sensor BME280 ok--")
+        return True
+
+    def read(self) -> np.array:
+        return np.array(bme280.temperature, bme280.humidity, bme280.pressure)
+
+    def available(self):
+        return True
+
