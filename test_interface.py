@@ -10,7 +10,7 @@ print("======")
 #imu = BMI(0x69)
 #imu.setup()
 
-bme = BME(0x76)
+bme = BME280(0x76)
 bme.setup()
 
 while(True):
