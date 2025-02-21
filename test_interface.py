@@ -14,7 +14,7 @@ bme = BME280(0x76)
 bme.setup()
 
 while(True):
-    time.sleep(0.5)
+    time.sleep(0.2)
 #    if imu.available(): 
 #        imu.read()
 #    else: 
@@ -25,5 +25,9 @@ while(True):
         print("Reading..")
         print(bme.read())
     else:
-        print("Volver a intentar concecion en 3 segundos")
-        time.sleep(3)
+        print("\r Volver a intentar conexión en 3 segundos.")
+        time.sleep(1)
+        print("\r Volver a intentar conexión en 3 segundos..")
+        time.sleep(1)
+        print("\r Volver a intentar conexión en 3 segundos...")
+        time.sleep(1)
