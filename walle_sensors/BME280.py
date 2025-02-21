@@ -18,7 +18,7 @@ class BME280(Sensor):
         return True
 
     def read(self) -> np.array:
-        return np.array([bme280.temperature, bme280.humidity, bme280.pressure])
+        return np.array([self.bme280.temperature, self.bme280.humidity, self.bme280.pressure])
 
     def available(self):
         return True
