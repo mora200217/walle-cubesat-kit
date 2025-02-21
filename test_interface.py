@@ -25,9 +25,5 @@ while(True):
         print("Reading..")
         print(bme.read())
     else:
-        print("\r Volver a intentar conexión en 3 segundos.")
-        time.sleep(1)
-        print("\r Volver a intentar conexión en 3 segundos..")
-        time.sleep(1)
         print("\r Volver a intentar conexión en 3 segundos...")
-        time.sleep(1)
+        time.sleep(3)
