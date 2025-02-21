@@ -1,5 +1,5 @@
 from walle_sensors.bmi import BMI
-from walle_sensors.BME280 import BME
+from walle_sensors.BME280 import BME280
 
 import time 
 
