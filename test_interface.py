@@ -22,9 +22,8 @@ while(True):
  #       time.sleep(0.1)
 
     if bme.available():
-        bme.read()
         print("Reading..")
         print(bme.read())
     else:
-        print("No available data in bme. Please check connections")
-        time.sleep(0.1)
+        print("Volver a intentar concecion en 3 segundos")
+        time.sleep(3)
