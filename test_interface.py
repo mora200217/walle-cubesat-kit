@@ -1,4 +1,5 @@
 from walle_sensors.bmi import BMI
+from walle_sensors.BME280 import BME
 
 import time 
 
@@ -9,7 +10,7 @@ print("======")
 imu = BMI(0x69)
 imu.setup()
 
-bme = BME280(0x76)
+bme = BME(0x76)
 bme.setup()
 
 while(True):
