@@ -1,4 +1,6 @@
 import board
+import numpy as np
+
 from walle_sensors.sensor import Sensor
 from adafruit_bme280 import basic as adafruit_bme280
 
