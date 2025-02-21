@@ -14,7 +14,7 @@ bme = BME(0x76)
 bme.setup()
 
 while(True):
-    time.sleep(100)
+    time.sleep(0.5)
     if imu.available(): 
         imu.read()
     else: 
