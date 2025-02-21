@@ -24,13 +24,20 @@ class BME280(Sensor):
         return True
 
     def read(self) -> np.array:
-        return np.array([self.bme280.temperature, self.bme280.humidity, self.bme280.pressure])
+        try:
+            return np.array([self.bme280.temperature, self.bme280.humidity, self.bme280.pressure])
+        except OSError as e:
+            print(" -!- Sensor BME280 desconectado -!-")
+            return np.array([None, None, None])
+        except Exception as e:
+            print(f" -!- Error inesperado en BME280: {e} -!-")
+            return np.array([None, None, None])
 
     def available(self):
         try:
             _ = self.bme280.temperature  # Intenta leer un valor del sensor
             return True
         except Exception as e:
-            print(f"Error: Sensor desconectado - {e}")  # Mensaje de error opcional
+            print(f"Error: Sensor BME280 desconectado - {e}")  # Mensaje de error opcional
             return False
 
