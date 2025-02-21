@@ -7,7 +7,7 @@ class BME280(Sensor):
     def __init__(self, addr):
         super().__init__()
         i2c = board.I2C()
-        bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c,addr
+        bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c,addr)
 
 
     def setup(self) -> bool:
