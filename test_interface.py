@@ -15,15 +15,17 @@ bme.setup()
 
 while(True):
     time.sleep(0.2)
-    if imu.available(): 
-        imu.read()
+    if imu.available():
+        print("BME280 reading..")
+        print(imu.read())
     else: 
         print("No available data in imu. Please check connections")
         time.sleep(0.1)
 
+    
     if bme.available():
-        print("Reading..")
+        print("BME280 reading..")
         print(bme.read())
     else:
-        print("\r Volver a intentar conexión en 3 segundos...")
-        time.sleep(3)
+        print("No available data in bme. Please check connections")
+        time.sleep(0.1)
