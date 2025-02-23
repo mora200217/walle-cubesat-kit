@@ -6,8 +6,6 @@ class MQ135(SPI, Sensor):
     def __init__(self, canal):
         super().__init__()
         self.canal = canal
-        print("aaaaaaaa")
-        x = self.a
 
     def setup(self) -> bool:
         print("--Sensor MQ135 ok--")
@@ -19,7 +17,7 @@ class MQ135(SPI, Sensor):
         response = self.spi.xfer2(command)
         result = ((response[1] & 3) << 8) + response[2]
         voltage = (result * 5.24) / 1023
-
+        print(voltage)
         return self.get_gas_ppm(voltage)
 
     def available(self):
@@ -27,7 +25,7 @@ class MQ135(SPI, Sensor):
 
 
     def get_gas_ppm(self, Vout):
-        Vc = 5
+        Vc = 5.24
         RL = 1000 #-- 1k --
         R0 = 7000 #-- 7k --
 
@@ -37,7 +35,7 @@ class MQ135(SPI, Sensor):
         else:
             Rs = ((Vc - Vout) / Vout) * RL
 
-
+        print(Rs)
         ratio = Rs / R0
 
         if ratio <= 0:
