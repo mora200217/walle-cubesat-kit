@@ -9,7 +9,7 @@ class MQ135(Sensor, SPI):
         self.canal = canal
 
     def setup(self) -> bool:
-        print("--Sensor BME280 ok--")
+        print("--Sensor MQ135 ok--")
         return True
 
     def read(self):

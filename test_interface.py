@@ -28,11 +28,11 @@ while(True):
         time.sleep(0.1)
 """
 
-    if bme.available():
+    if mq.available():
         print("BME280 reading..")
         print(mq.read())
     else:
-        print("No available data in bme. Please check connections")
+        print("No available data in mq. Please check connections")
         time.sleep(0.1)
 
     if bme.available():
