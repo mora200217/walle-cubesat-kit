@@ -17,7 +17,7 @@ class MQ135(SPI, Sensor):
         response = self.spi.xfer2(command)
         result = ((response[1] & 3) << 8) + response[2]
         voltage = (result * 5.24) / 1023
-        print(voltage)
+
         return self.get_gas_ppm(voltage)
 
     def available(self):
@@ -35,7 +35,6 @@ class MQ135(SPI, Sensor):
         else:
             Rs = ((Vc - Vout) / Vout) * RL
 
-        print(Rs)
         ratio = Rs / R0
 
         if ratio <= 0:
