@@ -19,8 +19,8 @@ class MQ135(Sensor, SPI):
         result = ((response[1] & 3) << 8) + response[2]
         Voltage = (result * 5) / 1023
 
-        return self.get_gas_ppm(Voltage)
-
+        #return self.get_gas_ppm(Voltage)
+        return Voltage
     def available(self):
         return True
 
