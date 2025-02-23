@@ -2,13 +2,12 @@ from walle_sensors.interfaces.spi import SPI
 from walle_sensors.sensor import Sensor
 
 
-class MQ135(Sensor, SPI):
-
+class MQ135(SPI, Sensor):
     def __init__(self, canal):
         super().__init__()
         self.canal = canal
         print("aaaaaaaa")
-        x = self.a 
+        x = self.a
 
     def setup(self) -> bool:
         print("--Sensor MQ135 ok--")
