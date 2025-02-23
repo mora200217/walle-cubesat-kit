@@ -29,7 +29,7 @@ while(True):
 """
 
     if mq.available():
-        print("BME280 reading..")
+        print("MQ135 reading..")
         print(mq.read())
     else:
         print("No available data in mq. Please check connections")

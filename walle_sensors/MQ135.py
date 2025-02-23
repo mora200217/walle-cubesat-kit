@@ -19,6 +19,11 @@ class MQ135(SPI, Sensor):
         result = ((response[1] & 3) << 8) + response[2]
         voltage = (result * 5.24) / 1023
 
+        if voltage <= 0:
+            self.disponible = False
+            return None
+        self.disponible = True
+
         return self.get_gas_ppm(voltage)
 
     def available(self):
@@ -31,19 +36,9 @@ class MQ135(SPI, Sensor):
         RL = 1000 #-- 1k --
         R0 = 7000 #-- 7k --
 
-        if Vout <= 0:
-            Rs = -1
-            self.disponible = False
-            pass
-        else:
-            self.disponible = True
-            Rs = ((Vc - Vout) / Vout) * RL
+        Rs = ((Vc - Vout) / Vout) * RL
 
         ratio = Rs / R0
-
-        if ratio <= 0:
-            self.disponible = False
-            return None
 
         a = 116.6020682
         b = 2.769034857
