@@ -1,25 +1,32 @@
-import board
+import spidev
+import time
+
+# Inicializar SPI
 
 spi = spidev.SpiDev()
 spi.open(0, 0)
+spi.max_speed_hz = 1350000
 
-def analog_read(channel):
-    r = spi.xfer2([1, (8 + channel) << 4, 0])
-    adc_out = ((r[1] & 3) << 8) + r[2]
-    return adc_out
+def read_adc(channel):
 
+    if channel < 0 or channel > 7:
+        raise ValueError("El canal debe estar entre 0 y 7")
 
-def get_gas_ppm(Rs, R0):
-    ratio = Rs / R0
-    if ratio <= 0:
-        return None
-    a = 116.6020682
-    b = 2.769034857
-    ppm = a * (ratio ** -b)
-    return ppm
+    # Enviar comando de lectura: 1 byte de inicio, 3 bits de selección, 5 bits de relleno
+    command = [1, (8 + channel) << 4, 0]
+    response = spi.xfer2(command)
 
-while True:
-    reading = analog_read(0)
-    voltage = reading * 5 / 1024
-    print("Reading=%d\tVoltage=%f" % (reading, voltage))
-    time.sleep(1)
+    # Procesar respuesta (10 bits)
+    result = ((response[1] & 3) << 8) + response[2]
+    return result
+
+try:
+    while True:
+        valor = read_adc(0)  # Leer canal 0
+        voltaje = (valor * 3.3) / 1023  # Convertir a voltaje (3.3V referencia)
+        print(f"Valor ADC: {valor}, Voltaje: {voltaje:.2f}V")
+        time.sleep(1)
+
+except KeyboardInterrupt:
+    print("Cerrando SPI")
+    spi.close()
