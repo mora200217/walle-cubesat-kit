@@ -7,6 +7,7 @@ class MQ135(Sensor, SPI):
     def __init__(self, canal):
         super().__init__()
         self.canal = canal
+        print("aaaaaaaa")
 
     def setup(self) -> bool:
         print("--Sensor MQ135 ok--")
