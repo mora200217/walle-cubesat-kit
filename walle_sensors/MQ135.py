@@ -1,5 +1,5 @@
 from walle_sensors.interfaces.spi import SPI
-from sensor import Sensor
+from walle_sensors.sensor import Sensor
 
 
 class MQ135(Sensor, SPI):
