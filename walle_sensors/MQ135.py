@@ -27,7 +27,7 @@ class MQ135(SPI, Sensor):
         return self.get_gas_ppm(voltage)
 
     def available(self):
-
+        self.read()
         return self.disponible
 
 
