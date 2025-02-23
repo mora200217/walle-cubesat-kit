@@ -18,15 +18,15 @@ class MQ135(SPI, Sensor):
         command = [1, (8 + self.canal) << 4, 0]
         response = self.spi.xfer2(command)
         result = ((response[1] & 3) << 8) + response[2]
-        voltage = (result * 5) / 1023
+        voltage = (result * 5.24) / 1023
 
-        #return self.get_gas_ppm(voltage)
-        return voltage
+        return self.get_gas_ppm(voltage)
+
     def available(self):
         return True
 
 
-    def get_gas_ppm(Vout):
+    def get_gas_ppm(self, Vout):
         Vc = 5
         RL = 1000 #-- 1k --
         R0 = 7000 #-- 7k --
