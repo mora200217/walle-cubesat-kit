@@ -2,7 +2,7 @@ import asyncio
 import websockets
 import json
 import random  # Simulating IMU data
-from ..bmi import BMI
+from walle_sensors.bmi import BMI
 
 
 async def send_imu_data(websocket, path = None):
