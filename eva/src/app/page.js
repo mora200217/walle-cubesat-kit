@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import { Viz } from '../../components/Viz';
 
 import * as THREE from 'three';
+import { Title } from '../../components/Title';
 
 export default function Home() {
 
@@ -13,9 +14,7 @@ export default function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         <div>
-          <h1>Eva</h1>
-          <h6>for Walle</h6>
-
+          <Title />
           <Viz/>
         </div>
 

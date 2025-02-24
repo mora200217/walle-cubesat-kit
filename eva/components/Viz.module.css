@@ -1,0 +1,40 @@
+.container {
+    position: fixed;
+    left: 0; 
+    top: 0; 
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vizDiv {
+    width: 100vw;
+    height: 100vh;
+    background: black;
+}
+
+.videoFeed {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    width: 300px;
+}
+
+.videoFeed img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.chartOverlay {
+    position: fixed;
+    /* bottom: 20px; */
+    left: 0px;
+    top: 0; 
+    width: 25%;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+    padding: 10px;
+}
