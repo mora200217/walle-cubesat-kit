@@ -1,29 +1,31 @@
+import numpy as np
 import asyncio
 import websockets
-import numpy as np 
 import json
 import random  # Simulating IMU data
 from walle_sensors.bmi import BMI
-from utils.filter import LowPassFilter
 
-N = 10 # For filter 
 
 async def send_imu_data(websocket, path = None):
-    obs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     print("Client connected")
+    roll_vector =  [0] * 10
+    pitch_vector =  [0] * 10
+    
     try:
         while True:
             # Simulating IMU angles (roll, pitch, yaw)
             angles = imu.read()
+            roll_vector = roll_vector[1:] + [angles[1]]
+            roll_mean = np.mean(roll_vector)
+
+            pitch_vector = pitch_vector[1:] + [angles[0]]
+            pitch_mean = np.mean(pitch_vector)
             # angles = results[1] # get pitch and roll
-            filter = LowPassFilter(0.4)
-            obs = [obs[1:len(obs)-1], angles[1]]
-            filtered_value = filter.update(obs)
             
             imu_data = {
-                "roll": filtered_value,
-                "pitch":0,
-                "yaw": 0    
+                "roll": roll_mean,
+                "pitch": pitch_mean,
+                "yaw": 0
             }
 
             
@@ -37,8 +39,8 @@ async def send_imu_data(websocket, path = None):
         print("Client disconnected")
 
 async def main():
-    global imu, obs 
-    
+    global imu
+
     imu = BMI(0x69)
     imu.setup()
 
