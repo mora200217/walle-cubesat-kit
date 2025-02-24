@@ -9,6 +9,7 @@ from utils.filter import LowPassFilter
 N = 10 # For filter 
 
 async def send_imu_data(websocket, path = None):
+    obs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     print("Client connected")
     try:
         while True:
@@ -22,7 +23,7 @@ async def send_imu_data(websocket, path = None):
             imu_data = {
                 "roll": filtered_value,
                 "pitch":0,
-                "yaw": 0
+                "yaw": 0    
             }
 
             
@@ -37,7 +38,7 @@ async def send_imu_data(websocket, path = None):
 
 async def main():
     global imu, obs 
-    obs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    
     imu = BMI(0x69)
     imu.setup()
 
