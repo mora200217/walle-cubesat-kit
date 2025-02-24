@@ -16,7 +16,7 @@ export const Viz = () => {
     const [ws, setWs] = useState(null);
   
     useEffect(() => {
-      const socket = new WebSocket("ws://localhost:8080");
+      const socket = new WebSocket("ws://192.168.30.236:8080");
   
       socket.onopen = () => {
         console.log("Connected to WebSocket server");

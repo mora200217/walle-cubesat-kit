@@ -26,6 +26,7 @@ class BMI(I2C, Sensor):
         self.units = "m/s^2"
         self.available = True
 
+        self.__auto_calibrate()
         try:
             self.write_register(0x7E, 0x11)  # ACC_NORMAL_MODE
             print("--Sensor BMI ok--")
@@ -39,7 +40,10 @@ class BMI(I2C, Sensor):
     def read(self) -> np.array:
         self.available = True
         try:
-            return np.array(self.__read_acceleration(self.ax_offset, self.ay_offset, self.az_offset))
+            acc = np.array(self.__read_acceleration(self.ax_offset, self.ay_offset, self.az_offset))
+            angles = np.array(self.__calculate_tilt_angles(acc[0] ,acc[1],acc[2] ))
+
+            return np.array(acc, angles)
         except Exception as e:
             self.available = False
             print(" -!- Sensor BMI desconectado -!-")
