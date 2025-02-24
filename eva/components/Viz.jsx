@@ -9,6 +9,7 @@ import styles from "./Viz.module.css";
 
 export const Viz = () => {
     let sensorData; 
+    let angles = new Array(10).fill(0); 
     const mountRef = useRef(null);
     const [data, setData] = useState([]);
 
@@ -111,7 +112,14 @@ export const Viz = () => {
             
             if (mesh) {
                 console.log(sensorData);
-                mesh.rotation.z = sensorData.pitch; 
+
+                let pitch_t = sensorData.pitch; 
+                
+                  pitch_t
+
+
+                mesh.rotation.x = sensorData.pitch; 
+                mesh.rotation.y = sensorData.roll; 
             }
 
             
