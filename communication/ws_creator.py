@@ -2,7 +2,7 @@ import asyncio
 import websockets
 import json
 import random  # Simulating IMU data
-from walle_sensors.bmi import BMI
+from ..bmi import BMI
 
 
 async def send_imu_data(websocket, path = None):
@@ -35,8 +35,11 @@ async def main():
     imu.setup()
 
     print("Sensores configuration done")
-    
+
     server = await websockets.serve(send_imu_data, "192.168.30.236", 8080)
     await server.wait_closed()
 
-asyncio.run(main())
+
+
+def start(): 
+    asyncio.run(main())
