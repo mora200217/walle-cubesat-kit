@@ -20,18 +20,31 @@ class BMI(I2C, Sensor):
         self.ay_offset = 0
         self.az_offset = 0
 
+        self.available = True
+
     def setup(self) -> bool:
-          # Bus 1 is the standard for Raspberry Pi 4
-        self.write_register(0x7E, 0x11)  # ACC_NORMAL_MODE
+        self.units = "m/s^2"
+        self.available = True
+
+        try:
+            self.write_register(0x7E, 0x11)  # ACC_NORMAL_MODE
+            print("--Sensor BMI ok--")
+        except Exception as e:
+            self.available = False
+
         time.sleep(0.1)
-        print("Sensor {}")
+
         return True 
     
     def read(self) -> np.array:
-        return np.array(self.__read_acceleration(self.ax_offset, self.ay_offset, self.az_offset))
+        self.available = True
+        try:
+            return np.array(self.__read_acceleration(self.ax_offset, self.ay_offset, self.az_offset))
+        except Exception as e:
+            self.available = False
+            print(" -!- Sensor BMI desconectado -!-")
+            return np.array([None, None, None])
 
-    def available(self):
-        return True
 
     def __read_raw_acceleration(self):
         """Read raw acceleration data."""
