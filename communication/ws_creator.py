@@ -10,11 +10,12 @@ async def send_imu_data(websocket, path = None):
     try:
         while True:
             # Simulating IMU angles (roll, pitch, yaw)
-            results = imu.read()
-            print(results)
+            angles = imu.read()
+            # angles = results[1] # get pitch and roll
+            
             imu_data = {
-                "roll": 0,
-                "pitch": 0,
+                "roll": angles[1],
+                "pitch": angles[0],
                 "yaw": 0
             }
 
