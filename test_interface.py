@@ -24,8 +24,8 @@ bme.setup()
 while(True):
 
     print("BMI reading..")
-    measure = bmi.read()
-    if bmi.available == False:
+    measure = imu.read()
+    if imu.available == False:
         print("No available data in bmi. Please check connections")
         time.sleep(0.1)
     else:
