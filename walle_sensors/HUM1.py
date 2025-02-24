@@ -2,7 +2,7 @@ from walle_sensors.interfaces.spi import SPI
 from walle_sensors.sensor import Sensor
 
 
-class HUM(SPI, Sensor):
+class HUM1(SPI, Sensor):
     def __init__(self, canal):
         super().__init__()
         self.canal = canal
