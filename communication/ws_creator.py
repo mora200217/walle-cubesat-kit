@@ -17,7 +17,7 @@ async def send_imu_data(websocket, path = None):
             angles = imu.read()
             # angles = results[1] # get pitch and roll
             filter = LowPassFilter(0.4)
-            obs = obs[1:len(obs-1), angles[1]]
+            obs = obs[1:len(obs)-1, angles[1]]
             filtered_value = filter.update(obs)
             
             imu_data = {
