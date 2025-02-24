@@ -37,7 +37,7 @@ async def send_imu_data(websocket, path = None):
 
 async def main():
     global imu, obs 
-    obs = np.zeros(1, N)
+    obs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     imu = BMI(0x69)
     imu.setup()
 
