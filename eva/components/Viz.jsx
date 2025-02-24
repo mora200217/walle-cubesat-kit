@@ -1,3 +1,5 @@
+
+"use client"
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -6,15 +8,53 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import styles from "./Viz.module.css";
 
 export const Viz = () => {
+    let sensorData; 
     const mountRef = useRef(null);
     const [data, setData] = useState([]);
 
+    const [messages, setMessages] = useState([]);
+    const [ws, setWs] = useState(null);
+  
     useEffect(() => {
+      const socket = new WebSocket("ws://localhost:8080");
+  
+      socket.onopen = () => {
+        console.log("Connected to WebSocket server");
+        socket.send(JSON.stringify({ action: "ping" }));
+      };
+  
+      socket.onmessage = (event) => {
+        console.log(event)
+        sensorData = JSON.parse(event.data);
+        console.log(data)
+        
+      };
+  
+      socket.onclose = () => console.log("WebSocket disconnected");
+  
+      setWs(socket);
+  
+      return () => socket.close();
+    }, []);
+  
+    const sendMessage = () => {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ message: "Hello from client" }));
+      }
+    };
+
+    
+
+    useEffect(() => {
+
+        let  mesh; 
         if (!mountRef.current) return;
 
+
+            
         // Scene, Camera, Renderer
         const scene = new THREE.Scene();
-        scene.add(new THREE.AxesHelper(5));
+        // scene.add(new THREE.AxesHelper(5));
 
         const light = new THREE.SpotLight();
         light.position.set(20, 20, 20);
@@ -37,17 +77,19 @@ export const Viz = () => {
 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
-
+        
         // STL Loader
-        let mesh;
+        // var mesh;
         const loader = new STLLoader();
         loader.load(
             "/cubesat.stl",
             (geometry) => {
-                const material = new THREE.MeshNormalMaterial({ wireframe: true });
+                const material = new THREE.MeshNormalMaterial({ wireframe: true, depthFunc: true, depthWrite: true
+                 });
                 mesh = new THREE.Mesh(geometry, material);
-                // mesh.scale.set(10, 10, 10);
+                mesh.scale.set(10, 10, 10);
                 scene.add(mesh);
+                
             },
             (xhr) => console.log((xhr.loaded / xhr.total) * 100 + "% loaded"),
             (error) => console.error("Error loading STL:", error)
@@ -60,9 +102,22 @@ export const Viz = () => {
             renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
         };
         window.addEventListener("resize", onWindowResize);
+        controls.autoRotate = true;
+        camera.position.y = 2; 
+        
+
 
         const animate = () => {
+            
+            if (mesh) {
+                console.log(sensorData);
+                mesh.rotation.z = sensorData.pitch; 
+            }
+
+            
+            controls.target.set(0.5, 1, 0.5)
             requestAnimationFrame(animate);
+            // mesh.rotation.y += 2; 
             controls.update();
             renderer.render(scene, camera);
         };
