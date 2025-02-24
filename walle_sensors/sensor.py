@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 class Sensor(ABC): 
     def __init__(self): 
         self.units = "mm"
+        self.available = False
 
     @abstractmethod
     def setup(self) -> bool: 
@@ -13,11 +14,7 @@ class Sensor(ABC):
     def read(self): 
         print("Please implement read setting")
         pass 
-    
-    @abstractmethod
-    def available(self): 
-        print("Please implement configuration setting")
-        pass 
+
 
 
         

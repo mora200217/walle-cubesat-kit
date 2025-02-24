@@ -6,7 +6,7 @@ class MQ135(SPI, Sensor):
     def __init__(self, canal):
         super().__init__()
         self.canal = canal
-        self.disponible = True
+        self.available = True
 
     def setup(self) -> bool:
         print("--Sensor MQ135 ok--")
@@ -20,16 +20,11 @@ class MQ135(SPI, Sensor):
         voltage = (result * 5.24) / 1023
 
         if voltage <= 0:
-            self.disponible = False
+            self.available = False
             return None
-        self.disponible = True
+        self.available = True
 
         return self.get_gas_ppm(voltage)
-
-    def available(self):
-        self.read()
-        return self.disponible
-
 
     def get_gas_ppm(self, Vout):
         Vc = 5.24
