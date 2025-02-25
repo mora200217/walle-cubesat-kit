@@ -8,8 +8,13 @@ import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import styles from "./Viz.module.css";
 import { SideBar } from "./SideBar/SideBar";
 import { Title } from './AppTitle/Title';
+import GUI from 'lil-gui'; 
+
+
 
 export const Viz = () => {
+    const gui = new GUI();
+
     let sensorData; 
     let angles = new Array(10).fill(0); 
     const mountRef = useRef(null);
@@ -166,7 +171,7 @@ export const Viz = () => {
             <div className={styles.videoFeed}>
                 
                 <img 
-                    src="http://192.168.223.236:5000/video_feed"
+                    src="http://192.168.30.236:5000/video_feed"
                      alt="Video Stream" 
                     //  onError={(e)=> {e.target.src}}
                 />
@@ -178,7 +183,7 @@ export const Viz = () => {
                 
             </SideBar>
            
-
+            <Title/>
 
             <div>
                 

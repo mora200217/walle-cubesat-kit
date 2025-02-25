@@ -1,17 +1,26 @@
 .title{
-    position: relative; 
-    z-index: 3; 
-    left: 0px; 
-    bottom: 0px; 
-    margin: 4rem; 
+   font-size: 5rem;
+   line-height: 4.5rem;
+}
+
+.subtitle{
     font-size: 3rem;
+    font-weight: 300;
 }
 
 .container{
+    padding: 5rem;
+    font-size: 40px;
     position: fixed; 
-    left: 0px;
+    right: 0px;
     bottom: 0px;
     color: white;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+}
+
+.imageContainer{
+    margin-right: 1.6rem;
 }
