@@ -8,18 +8,17 @@ from adafruit_bme280 import basic as adafruit_bme280
 class BME280(Sensor):
     def __init__(self, addr):
         super().__init__()
-
         self.units = ["°C", '%', "hPa"]
+        self.available = True
 
         i2c = board.I2C()
 
-        self.available = True
 
         try:
             self.bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c,addr)
         except Exception as e:
             self.available = False
-            print(f"Error: Sensor BME280 no conectado - {e}")
+            print(f"Sensor BME280 no conectado - Error: {e}")
 
 
 
@@ -46,7 +45,7 @@ class BME280(Sensor):
         except Exception as e:
 
             self.available = False
-            print(f" -!- Error inesperado en BME280: {e} -!-")
+            print(f" -!- Error inesperado en BME280 -!- Error: {e} ")
             return np.array([None, None, None])
 
 

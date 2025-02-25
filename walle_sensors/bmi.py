@@ -31,6 +31,7 @@ class BMI(I2C, Sensor):
             self.write_register(0x7E, 0x11)  # ACC_NORMAL_MODE
             print("--Sensor BMI ok--")
         except Exception as e:
+            print(f"Sensor BMI no conectado - Error: {e}")
             self.available = False
 
         time.sleep(0.1)
