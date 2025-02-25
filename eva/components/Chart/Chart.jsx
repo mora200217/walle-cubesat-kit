@@ -11,7 +11,7 @@ export const Chart = (props) => {
                     
                 <ResponsiveContainer width="100%" height="100%">
                 {/* <h4>Gráfica</h4> */}
-                    <LineChart data={data} title="Hola mundo" margin={{ top: 0, right: 0, left: 0, bottom: 5 }}>
+                    <LineChart data={data} title="Hola mundo" margin={{ top: 0, right: 0, left: 0, bottom: 5 }} onClick={() => {alert("asd")}}>
                         
                         <CartesianGrid strokeDasharray="1" />
                         <XAxis dataKey="time" label={"Time (s)"}/>
