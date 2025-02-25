@@ -7,14 +7,19 @@ import { Viz } from '../../components/Viz';
 import * as THREE from 'three';
 import { Title } from '../../components/AppTitle/Title';
 import { FooterContainer } from '../../components/FooterContainer/FooterContainer';
+import { SideBar } from "../../components/SideBar/SideBar";
 
 export default function Home() {
 
 
   return (
     <div className={styles.page}>
+      
+
       <main className={styles.main}>
+      
         <div>
+          
           <Title />
           <Viz/>
         </div>

@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+
 import styles from "./Viz.module.css";
+import { SideBar } from "./SideBar/SideBar";
+import { Title } from './AppTitle/Title';
 
 export const Viz = () => {
     let sensorData; 
@@ -55,7 +57,7 @@ export const Viz = () => {
             
         // Scene, Camera, Renderer
         const scene = new THREE.Scene();
-        // scene.add(new THREE.AxesHelper(5));
+        scene.add(new THREE.AxesHelper(5));
 
         const light = new THREE.SpotLight();
         light.position.set(20, 20, 20);
@@ -85,10 +87,13 @@ export const Viz = () => {
         loader.load(
             "/cubesat.stl",
             (geometry) => {
-                const material = new THREE.MeshNormalMaterial({ wireframe: true, depthFunc: true, depthWrite: true
-                 });
+                const material = new THREE.MeshNormalMaterial({ wireframe: true, depthFunc: true, depthWrite: true});
+                let center = new THREE.Vector3();
+
                 mesh = new THREE.Mesh(geometry, material);
+                geometry.translate(-0.05, -0.1, -0.05);
                 mesh.scale.set(10, 10, 10);
+                
                 scene.add(mesh);
                 
             },
@@ -103,27 +108,22 @@ export const Viz = () => {
             renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
         };
         window.addEventListener("resize", onWindowResize);
-        controls.autoRotate = true;
+        controls.autoRotate = false;
         camera.position.y = 2; 
+        console.log()
         
 
 
         const animate = () => {
             
             if (mesh) {
-                console.log(sensorData);
 
-                let pitch_t = sensorData.pitch; 
-                
-                  pitch_t
-
-
-                mesh.rotation.x = sensorData.pitch; 
-                mesh.rotation.y = sensorData.roll; 
+                mesh.rotation.x = sensorData.pitch / 180 * Math.PI; 
+                mesh.rotation.y = sensorData.roll / 180 * Math.PI; 
             }
 
             
-            controls.target.set(0.5, 1, 0.5)
+            controls.target.set(0,0,0)
             requestAnimationFrame(animate);
             // mesh.rotation.y += 2; 
             controls.update();
@@ -134,7 +134,7 @@ export const Viz = () => {
         // Simulated Data Updates for the Plot
         const interval = setInterval(() => {
             setData((prevData) => {
-                const newData = [...prevData, { time: prevData.length, value: Math.random() * 10 }];
+                const newData = [...prevData, { time: prevData.length, value: sensorData.pitch }];
                 return newData.length > 20 ? newData.slice(1) : newData; // Keep only 20 points
             });
         }, 500);
@@ -164,22 +164,20 @@ export const Viz = () => {
 
             {/* Video Feed */}
             <div className={styles.videoFeed}>
-                <img src="http://192.168.223.236:5000/video_feed" alt="Stream" />
+                
+                <img 
+                    src="http://192.168.223.236:5000/video_feed"
+                     alt="Video Stream" 
+                    //  onError={(e)=> {e.target.src}}
+                />
+                <h6>Video Feed</h6>
             </div>
 
             {/* Overlay Chart */}
-            <div className={styles.chartOverlay}>
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={data} title="a" margin={{ top: 30, right: 30, left: 20, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="1" />
-                        <XAxis dataKey="time" />
-                        <YAxis />
-                        
-                        {/* <Tooltip /> */}
-                        <Line type="natural" dataKey="value" stroke="#8884d8" strokeWidth={2} dot={true} />
-                    </LineChart>
-                </ResponsiveContainer>
-            </div>
+            <SideBar>
+                
+            </SideBar>
+           
 
 
             <div>
