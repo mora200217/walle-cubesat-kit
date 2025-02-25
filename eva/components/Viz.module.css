@@ -17,6 +17,8 @@
 
 .videoFeed {
     position: fixed;
+    margin: 1rem;
+    padding: 1rem;
     right: 10px;
     top: 10px;
     width: 300px;
@@ -27,14 +29,3 @@
     border-radius: 8px;
 }
 
-.chartOverlay {
-    position: fixed;
-    /* bottom: 20px; */
-    left: 0px;
-    top: 0; 
-    width: 25%;
-    height: 200px;
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 8px;
-    padding: 10px;
-}
