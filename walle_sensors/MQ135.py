@@ -1,3 +1,4 @@
+import RPi.GPIO as GPIO
 from walle_sensors.interfaces.spi import SPI
 from walle_sensors.sensor import Sensor
 
@@ -8,14 +9,21 @@ class MQ135(SPI, Sensor):
         self.canal = canal
         self.available = True
 
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(CS_PIN, GPIO.OUT)
+        GPIO.output(CS_PIN, GPIO.HIGH)
+
     def setup(self) -> bool:
         print("--Sensor MQ135 ok--")
         return True
 
     def read(self):
 
+        GPIO.output(CS_PIN, GPIO.LOW)
         command = [1, (8 + self.canal) << 4, 0]
         response = self.spi.xfer2(command)
+        GPIO.output(CS_PIN, GPIO.HIGH)
+
         result = ((response[1] & 3) << 8) + response[2]
         voltage = (result * 5.24) / 1023
 
